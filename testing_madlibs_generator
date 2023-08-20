@@ -1,0 +1,24 @@
+from random import randint
+# пишу предложение, в которое буду вставлять случайные слова
+story = "Вчера я пришел в {} и увидел давнего знакомого {}. " + "Я решил, что он стал {}, но не мог в это поверить. " + "В ту же секунду я воскликнул {} и под эпичную музыку ушел в {}."
+word_dict = {'place': ['кафе', 'Москоу_сити', 'пиццерию Фредди', 'школу'],
+             'name': ['Billy Harringthon', 'Андрея', 'furrka', 'Мафиозника'],
+             'character': ['Cristiano Ronaldo', 'фифером', 'актером', 'Олей Бузовой'],
+             'speech': ['Я русский!', 'я приму тебя таким, какой ты есть', 'поздравляю!', 'Мужчина, я вызываю полицию'],
+             'direction': ['море', 'больницу', 'психушку(мой дом)', 'backrooms(опять провалился в текстуры)']}
+def get_word(type, word_dict): # получаем слово в определенном типе из словаря
+    word = word_dict[type]
+    len_word = len(word) - 1
+    index = randint(0, len_word)
+    return word_dict[type].pop(index)
+def create_final_story():
+    return story.format(
+        get_word('place', word_dict),
+        get_word('name', word_dict),
+        get_word('character', word_dict),
+        get_word('speech', word_dict),
+        get_word('direction', word_dict)
+    )
+print("Story: ")
+print()
+print(create_final_story())
