@@ -1,0 +1,22 @@
+import random
+
+print("В этом проекте пользователю нужно угадать число, которое загадал компьютер, менее чем за 10 попыток")
+def guess_number(): # компьютер загадывает число в диапозоне от 1 до 100
+    number_computer = random.randint(1, 100)
+    return number_computer
+def ask_guess_number(): # вы угадываете число компьютера
+    count = 0 # количество попыток, за которое вы угадали число компьютера
+    number_computer = guess_number() # инициализируем число компьютера
+    for i in range(10):
+        guess = int(input(f"Загадайте число от 1 до 100: "))
+        if guess < number_computer:
+            print("Ты загадал число меньше числа компьютера")
+        elif guess > number_computer:
+            print("Ты загадал число больше числа компьютера")
+        else:
+            print(f"Поздравляю! Ты угадал число компьютера за {count} попыток!!!")
+            break
+        count += 1
+    if count == 10:
+        print("Вы не угадали число. Попробуйте еще раз")
+print(ask_guess_number())
