@@ -1,0 +1,19 @@
+import random
+
+print("В этом проекте пользователь будет играть с компьютером в камень-ножницы-бумага")
+def play():
+    choose_computer = random.choice(['r', 's', 'p']) # 'r' это камень, 's' это ножницы, 'p'это бумага
+    user_choice = input("Введите s, r, или p: ") # вводите только s, r, p
+    while user_choice != 'СТОП': # Пока пользователь не введет стоп, игра будет продолжаться
+        if user_choice == 'r' and choose_computer == 's' or user_choice == 'p' and choose_computer == 'r' or user_choice == 's' and choose_computer == 'p':
+            print(choose_computer)
+            print("Вы выиграли!")
+        elif user_choice == choose_computer:
+            print(choose_computer)
+            print("Ничья. Попробуем еще раз!")
+        else:
+            print(choose_computer)
+            print("Искуственный интеллект взял вверх!")
+        user_choice = input("Введите s, r или p: ")
+        choose_computer = random.choice(['r', 's', 'p'])
+    print("Рад был с вами разделить это время!")
