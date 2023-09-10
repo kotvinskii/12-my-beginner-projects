@@ -1,0 +1,111 @@
+from random import choice
+
+from List_Words import list_words
+print("В этом проекте вы будете угадывать слово, загаданное компьютером, если вы не угадаете слово, вас повесят)")
+HANGMAN = (
+"""
+     ------
+     |    |
+     |
+     |
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     |    |
+     |    O
+     |
+     |
+     |
+     |
+    ----------
+    """,
+    """
+     ------
+     |    |
+     |    O
+     |    |
+     | 
+     |   
+     |    
+    ----------
+    """,
+    """
+     ------
+     |    |
+     |    O
+     |   /|
+     |   
+     |   
+     |   
+    ----------
+    """,
+    """
+     ------
+     |    |
+     |    O
+     |   /|\\
+     |   
+     |   
+     |     
+    ----------
+    """,
+    """
+     ------
+     |    |
+     |    O
+     |   /|\\
+     |   /
+     |   
+     |    
+    ----------
+    """,
+    """
+     ------
+     |    |
+     |    O
+     |   /|\\
+     |   / \\
+     |   
+     |   
+    ----------
+    """
+)
+
+def play_hungman():
+    guess_word = choice(list_words)
+    max_wrong = len(HANGMAN) # максимальное кол-во допустимых попыток
+    word = '_' * len(guess_word) # предпологаемое слово
+    index_HANGMAN = 0 # кол-во попыток за которое пользователь угадал слово
+    used = [] # список использованных букв
+    while word != guess_word or max_wrong != 0:
+        print(HANGMAN[index_HANGMAN])
+        print('Вы использовали следующие буквы: ', *used)
+        print("Ваше слово выглядит так: ", word)
+        guess = input("Введите предполагаемую букву или слово: ")
+        while guess in used:
+            print("Вы уже использовали данную букву")
+            guess = input("Введите предполагаемую букву или слово: ")
+        used.append(guess)
+        if guess in guess_word:
+            new_string = ""
+            print("Верно, буква " + guess + " находится в слове")
+            for i in range(len(guess_word)):
+                if guess == guess_word[i]:
+                    new_string += guess
+                else:
+                    new_string += word[i]
+            word = new_string
+
+        else:
+            print("Буквы " + guess + " нет в слове")
+            max_wrong -= 1 # уменьшаем возможное кол-во попыток
+            index_HANGMAN += 1 # увеличиваем затраченное кол-во попыток
+    if max_wrong == 0:
+        print(HANGMAN[index_HANGMAN])
+        print("Вас повесили(")
+    else:
+        print("Поздравляю вы угадали слово " + guess_word + " за " + str(index_HANGMAN) + " попыток")
