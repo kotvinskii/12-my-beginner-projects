@@ -1,0 +1,13 @@
+print("В этом проекте мы реализуем обычный таймер, который спустя время будет вам напоминать ваши ближайшие планы")
+
+import time
+def realization_timer(choose_time):
+    important_information = input("О чем вам напомнить: ")
+    while choose_time:
+        min, sec = divmod(choose_time, 60) # считаем сколько минут и секунд на таймере
+        timeformat ='{:02d}: {:02d}'.format
+        (min, sec) # преобразуем в нужный формат
+        print(timeformat, end='\r')
+        time.sleep(1) # начинается отсчет
+        choose_time -= 1
+    print(important_information) # выводится напоминалка
