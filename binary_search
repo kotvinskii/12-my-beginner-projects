@@ -1,0 +1,19 @@
+print("В этом проекте я реализую бинарный поиск, который будет выводить индекс искомого числа в списке, если нет искомого числа в списке, выводим -1")
+
+def binary_search(result, target, low=None, high=None): # вводим список и число
+    """Устанавливаем границы нашего списка"""
+    if low is None:
+        low = 0
+    if high is None:
+        high = len(result) - 1
+    """Пишем основной алгоритм"""
+    if high < low:
+        print(f'Число {target} нету в списке')
+        return -1
+    mid = (low + high) // 2 # устанавливаем текущий элемент нашего списка, который мудем проверять
+    if result[mid] == target: # если текущий элемент равен искомому элементу, вернем его индекс
+        return mid
+    elif result[mid] > target: # если текущий элемент больше искомого числа, ищем число в левой половине
+        return binary_search(result, target, low, mid-1)
+    else: # если текущий элемент больше искомого числа, ищем число в правой половине
+        return binary_search(result, target, mid+1, high)
