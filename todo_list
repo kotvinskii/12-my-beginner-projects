@@ -1,0 +1,37 @@
+print("В этом проекте я буду создавать список дел для пользователя, который он может редактировать")
+
+def todo_list():
+    tasks = []
+    count = 0
+    print("1. Посмотреть все задания")
+    print("2. Добавить новое задание")
+    print("3. Удалить задание")
+    print("4. Выйти")
+    while True:
+        choice = input("Введите функцию для списка: ")
+        if choice == '1':
+            if len(tasks) >= 1:
+                for task in tasks:
+                    print(f'{count}. {task}')
+                    count += 1
+            else:
+                print('У вас нет дел. Можете отдохнуть)')
+        elif choice == '2':
+            task = input("Что вам нужно сделать: ")
+            tasks.append(task)
+            print("Задание добавлено ")
+        elif choice == '3':
+            task = input("Какое задание вы хотите удалить?: ")
+            if len(tasks) >= 1:
+                if task not in tasks:
+                    print("Задание нет в списке")
+                else:
+                    tasks.remove(task)
+                    print("Задание удалено")
+            else:
+                print("Список пустой")
+
+        elif choice == '4':
+            break
+        else:
+            print("Неправильно введена команда. Попробуйте еще раз!")
