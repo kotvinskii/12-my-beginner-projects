@@ -1,0 +1,69 @@
+print("В этом проекте я буду создавть игру змейка на Python")
+from random import randrange
+import pygame
+
+"""Размеры игрового поля"""
+height = 800
+weight = 300
+"""Координаты змейки и яблока"""
+snake_x, snake_y = randrange(0, height, weight), randrange(0, height, weight)
+apple = randrange(0, height, weight), randrange(0, height, weight)
+"""Характеристики змейки"""
+length = 1
+snake = [(snake_x, snake_y)]
+snake_speed = 5
+dx, dy = 0, 0 # направление змейки
+fps = 5
+dict_control = {'W': True, 'S': True, 'D': True, 'A': True}
+
+pygame.init() # инициализируем наше окно
+"""Характеристики игрового поля"""
+screen = pygame.display.set_mode([height, weight])
+clock = pygame.time.Clock()
+display = pygame.display.set_caption("Snake_play)")
+"""Главный цикл"""
+while True:
+    screen.fill(pygame.Color('black')) # окрашиваем экран в черный цвет
+    """Рисуем змейку и яблоко"""
+    [pygame.draw.rect(screen, pygame.Color('green'), (i, j,  - 1, weight - 1)) for i, j in snake]
+    pygame.draw.rect(screen, pygame.Color('red'), (*apple, weight, weight))
+    """Движение змейки"""
+    snake_x += dx * weight
+    snake_y += dy * weight
+    snake.append([snake_x, snake_y])
+    snake = snake[-length:]
+    pygame.display.flip()
+    clock.tick(fps)
+    key = pygame.key.get_pressed()
+    if snake[-1] == apple:
+        apple = randrange(0, height, weight), randrange(0, height, weight)
+        length += 1
+        fps += 1
+    """Проверка на проигрыш"""
+    if snake_x < 0 or snake_x > height - weight or snake_y < 0 or snake_y > height - weight:
+        break
+    pygame.display.flip()
+    clock.tick(fps) # обновляем игру и делаем задержку для fps
+
+    """Проверка на выход из игры"""
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+    key = pygame.key.get_pressed()
+    if key[pygame.K_w] and dict_control['W']:
+        dict_control = {'W': True, 'S': False, 'D': True, 'A': True}
+        dx, dy = 0, -1
+    if key[pygame.K_s] and dict_control['S']:
+        dx, dy = 0, 1
+        dict_control = {'W': False, 'S': True, 'D': True, 'A': True}
+    if key[pygame.K_a] and dict_control['A']:
+        dict_control = {'W': True, 'S': True, 'D': False, 'A': True}
+        dx, dy = -1, 0
+    if key[pygame.K_d] and dict_control['D']:
+        dx, dy = 1, 0
+        dict_control = {'W': True, 'S': True, 'D': True, 'A': False}
+    """Проверка на поедание яблока"""
+    if snake[-1] == apple:
+        apple = randrange(0, height, weight), randrange(0, height, weight)
+        length += 1
+        fps += 1
