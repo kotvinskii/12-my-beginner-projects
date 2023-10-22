@@ -1,0 +1,43 @@
+import tkinter as tk
+import random
+print("В этом проекте мы реализуем игру Сапёр с помощью графической библиотеки tkinter и модуля random")
+"""Реализация игрового поля"""
+root = tk.Tk()
+root.title("My play minesweeper)")
+"""Параметры для игры"""
+ROWS = 20
+COLS = 20
+MINES = 10
+buttons = {} # словарь наших кнопок
+"""Заполнение поля кнопками"""
+for x in range(ROWS):
+    for y in range(COLS):
+        button = tk.Button(root, text='', width=2, height=1, command=lambda x=x, y=y: on_click(x, y))
+        button.grid(row=x, column=y, sticky=tk.N+tk.W+tk.S+tk.E)
+        buttons[(x, y)] = button
+
+mines = [] # список бомб
+"""Расстановка мин на поле"""
+while len(mines) < MINES:
+    x, y = random.randint(0, ROWS - 1), random.randint(0, COLS - 1)
+    if (x, y) not in mines:
+        mines.append((x, y))
+"""Функция, вызываемая при клике на клетку"""
+def on_click(x, y):
+    if (x, y) in mines: # если игрок нажал на ячейку с миной
+        buttons[(x, y)].config(text='*', background='red')
+        game_over()
+    else: # подсчитываем кол-во мин вокруг выбранной ячейки
+        count = sum(1 for dx in [-1, 0, 1] for dy in [-1, 0, 1] if (x + dx, y + dy) in mines)
+        buttons[(x, y)].config(text=str(count))
+
+"""Функция, вызываемая при проигрыше"""
+def game_over():
+    # Покраска всех мин в красный
+    for (x, y) in mines:
+        buttons[(x, y)].config(background='red')
+    # Отключение всех кнопок на поле
+    for x, y in buttons:
+        buttons[(x, y)]['state'] = 'disabled'
+# основной игровой цикл
+root.mainloop()
